@@ -20,3 +20,10 @@ VALUES
         'This is an awesome book!',
         'https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg'
 	);
+    
+UPDATE products
+SET title = 'A Book!'
+WHERE id = 1;
+
+SELECT * FROM products
+WHERE id = 1;
