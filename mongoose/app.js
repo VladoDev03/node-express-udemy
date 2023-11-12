@@ -19,15 +19,15 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
-    User.findById('655137dd834a55207778f977')
-        .then(user => {
-            req.user = new User(user.name, user.email, user.cart, user._id);
+// app.use((req, res, next) => {
+//     User.findById('655137dd834a55207778f977')
+//         .then(user => {
+//             req.user = new User(user.name, user.email, user.cart, user._id);
 
-            next();
-        })
-        .catch(err => console.log(err));
-});
+//             next();
+//         })
+//         .catch(err => console.log(err));
+// });
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
