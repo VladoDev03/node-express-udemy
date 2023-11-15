@@ -33,15 +33,18 @@ app.use(session({
     secret: 'my secret',
     resave: false,
     saveUninitialized: false,
-    cookie: {httpOnly: true},
+    cookie: { httpOnly: true },
     store: store
 }));
 
 app.use((req, res, next) => {
-    User.findById('65514fc0cc4a89cd5aa8c9dd')
+    if (!req.session.user) {
+        return next();
+    }
+
+    User.findById(req.session.user._id)
         .then(user => {
             req.user = user;
-
             next();
         })
         .catch(err => console.log(err));
