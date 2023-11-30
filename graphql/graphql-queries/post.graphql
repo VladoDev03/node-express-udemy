@@ -12,6 +12,34 @@ query {
   }
 }
 
+mutation {
+    createPost(postInput:{title: "Test Title", content: "Test Content", imageUrl: "Test Url"}) {
+        _id
+        title
+        content
+        imageUrl
+        creator {
+          name
+        }
+        createdAt
+    }
+}
+
+query {
+    posts {
+        posts {
+            _id
+            title
+            content
+            creator {
+              name
+            }
+            createdAt
+        }
+        totalPosts
+    }
+}
+
 type Post {
     _id: ID!
     title: String!
@@ -36,19 +64,32 @@ type AuthData {
     userId: String!
 }
 
+type PostData {
+    posts: [Post!]!
+    totalPosts: Int!
+}
+
 input UserInputData {
     name: String!
     email: String!
     password: String!
 }
 
+input PostInputData {
+    title: String!
+    content: String!
+    imageUrl: String!
+}
+
 type RootQuery {
     login(email: String!, password: String!): AuthData!
+    posts: PostData!
 }
 
 type RootMutation {
     # createUser(name: String, email: String, password: String)
     createUser(userInput: UserInputData): User!
+    createPost(postInput: PostInputData): Post!
 }
 
 schema {
