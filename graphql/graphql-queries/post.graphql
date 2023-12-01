@@ -41,6 +41,18 @@ query {
     }
 }
 
+query {
+    post(id: "some_id") {
+        title
+        content
+        imageUrl
+        creator {
+            name
+        }
+        createdAt
+    }
+}
+
 type Post {
     _id: ID!
     title: String!
@@ -85,6 +97,7 @@ input PostInputData {
 type RootQuery {
     login(email: String!, password: String!): AuthData!
     posts(page: Int): PostData!
+    post(id: ID!): Post!
 }
 
 type RootMutation {
