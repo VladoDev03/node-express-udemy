@@ -1,0 +1,144 @@
+mutation CreateNewUser($email: String!, $name: String!, $password: String!) {
+    createUser(userInput:{email: $email, name: $name, password: $password}) {
+        _id
+        email
+    }
+}
+
+query UserLogin($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+        token
+        userId
+    }
+}
+
+query {
+    user {
+      status
+    }
+}
+
+mutation UpdateUserStatus($userStatus: String!) {
+    updateStatus(status: $userStatus) {
+      status
+    }
+}
+
+mutation CreateNewPost($title: String!, $content: String!, $imageUrl: String!) {
+    createPost(postInput: {title: $title, content: $content, imageUrl: $imageUrl}) {
+        _id
+        title
+        content
+        imageUrl
+        creator {
+            name
+        }
+        createdAt
+    }
+}
+
+mutation UpdateExistingPost($postId: ID!, title: String!, $content: String!, $imageUrl: String!) {
+    updatePost(id: $postId, postInput: {title: $title, content: $content, imageUrl: $imageUrl}) {
+        _id
+        title
+        content
+        imageUrl
+        creator {
+            name
+        }
+        createdAt
+    }
+}
+
+query FetchPosts($page: Int) {
+    posts(page: $page) {
+        posts {
+            _id
+            title
+            content
+            imageUrl
+            creator {
+                name
+            }
+            createdAt
+        }
+        totalPosts
+    }
+}
+
+query FetchSinglePost($postId: ID!) {
+    post(id: $postId) {
+        title
+        content
+        imageUrl
+        creator {
+            name
+        }
+        createdAt
+    }
+}
+
+mutation {
+    deletePost(id: "some_id")
+}
+
+type Post {
+    _id: ID!
+    title: String!
+    content: String!
+    imageUrl: String!
+    creator: User!
+    createdAt: String!
+    updatedAt: String!
+}
+
+type User {
+    _id: ID!
+    name: String!
+    email: String!
+    password: String
+    status: String
+    posts: [Post!]!
+}
+
+type AuthData {
+    token: String!
+    userId: String!
+}
+
+type PostData {
+    posts: [Post!]!
+    totalPosts: Int!
+}
+
+input UserInputData {
+    name: String!
+    email: String!
+    password: String!
+}
+
+input PostInputData {
+    title: String!
+    content: String!
+    imageUrl: String!
+}
+
+type RootQuery {
+    login(email: String!, password: String!): AuthData!
+    posts(page: Int): PostData!
+    post(id: ID!): Post!
+    user: User!
+}
+
+type RootMutation {
+    createUser(userInput: UserInputData): User!
+    createPost(postInput: PostInputData): Post!
+    updatePost(id: ID!, postInput: PostInputData): Post!
+    deletePost(id: ID!): Boolean
+    updateStatus(status: String!): User!
+}
+
+schema {
+    query: RootQuery
+    mutation: RootMutation
+}
