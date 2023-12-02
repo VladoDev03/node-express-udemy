@@ -25,6 +25,19 @@ mutation {
     }
 }
 
+mutation {
+    updatePost(id: "Test Id", postInput: {title: "Test Title", content: "Test Content", imageUrl: "Test Url"}) {
+        _id
+        title
+        content
+        imageUrl
+        creator {
+            name
+        }
+        createdAt
+    }
+}
+
 query {
     posts(page: 1) {
         posts {
@@ -51,6 +64,10 @@ query {
         }
         createdAt
     }
+}
+
+mutation {
+    deletePost(id: "some_id")
 }
 
 type Post {
@@ -104,6 +121,8 @@ type RootMutation {
     # createUser(name: String, email: String, password: String)
     createUser(userInput: UserInputData): User!
     createPost(postInput: PostInputData): Post!
+    updatePost(id: ID!, postInput: PostInputData): Post!
+    deletePost(id: ID!): Boolean
 }
 
 schema {
