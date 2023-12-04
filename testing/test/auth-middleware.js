@@ -33,7 +33,7 @@ describe('Auth middleware', function () {
         };
 
         expect(authMiddleware.bind(this, req, {}, () => { })).to.throw();
-    })
+    });
 
     it('should yield a userId after decoding the token', function () {
         const req = {
@@ -52,5 +52,5 @@ describe('Auth middleware', function () {
         expect(jwt.verify.called).to.be.true;
 
         jwt.verify.restore();
-    })
+    });
 });

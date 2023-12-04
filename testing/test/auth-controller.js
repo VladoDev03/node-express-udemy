@@ -23,5 +23,5 @@ describe('Auth Controller - Login', function() {
         });
 
         User.findOne.restore();
-    })
+    });
 });
